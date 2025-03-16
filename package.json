@@ -15,7 +15,7 @@
     },
     "samples": [
         {
-            "displayName": "Base Setup",
+            "displayName": "InputServices",
             "description": "Contains the manager prefab, input maps examples and a base unity input file",
             "path": "Samples~/"
         }
