@@ -1,11 +1,12 @@
 using System;
-using Bakery.Inputs;
+using Bakery;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
+
 [CreateAssetMenu(fileName = "MenuInputMap", menuName = "Bakery/MenuInputMap")]
-public class MenuInputMap : InputMap, Inputs.IMenuActions
+public class MenuInputMap : InputMap, GenericInputs.IMenuActions
 {
     public static event Action OnCancel = delegate { };
     public static event Action<Vector2> OnCursorDelta = delegate { };
@@ -13,7 +14,7 @@ public class MenuInputMap : InputMap, Inputs.IMenuActions
     public static event Action OnMain = delegate { };
     public static event Action<Vector2> OnScroll = delegate { };
 
-    private Inputs.MenuActions _inputMap;
+    private GenericInputs.MenuActions _inputMap;
 
     public override bool IsEnabled
     {
@@ -27,7 +28,7 @@ public class MenuInputMap : InputMap, Inputs.IMenuActions
 
     public override void Init()
     {
-        Inputs inputs = new();
+        GenericInputs inputs = new();
         inputs.Enable();
         _inputMap = inputs.Menu;
         inputs.Menu.SetCallbacks(this);
@@ -66,7 +67,7 @@ public class MenuInputMap : InputMap, Inputs.IMenuActions
 
     public override void Shutdown()
     {
-        throw new NotImplementedException();
+        _inputMap.Disable();
     }
 }
 

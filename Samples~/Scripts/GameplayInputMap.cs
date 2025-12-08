@@ -1,19 +1,19 @@
 using System;
-using Bakery.Inputs;
+using Bakery;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 
 [CreateAssetMenu(fileName = "GameplayInputMap", menuName = "Bakery/GameplayInputMap")]
-public class GameplayInputMap : InputMap, Inputs.IGameplayActions
+public class GameplayInputMap : InputMap, GenericInputs.IGameplayActions
 {
     public static event Action OnPrimaryAction = delegate { };
     public static event Action<Vector2> OnMove = delegate { };
     public static event Action<Vector2> OnCursorDelta = delegate { };
     public static event Action OnCancel = delegate { };
 
-    private Inputs.GameplayActions _inputMap;
+    private GenericInputs.GameplayActions _inputMap;
 
     public override bool IsEnabled
     {
@@ -28,7 +28,7 @@ public class GameplayInputMap : InputMap, Inputs.IGameplayActions
 
     public override void Init()
     {
-        Inputs inputs = new();
+        GenericInputs inputs = new();
         inputs.Enable();
         _inputMap = inputs.Gameplay;
         inputs.Gameplay.SetCallbacks(this);

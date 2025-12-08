@@ -50,6 +50,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e13911065123442a68f763adc7cfc9ce, type: 2}
   - {fileID: 11400000, guid: 27bf60873cce1423d9b9f9f3b78775bc, type: 2}
   _defaultMap: {fileID: 11400000, guid: e13911065123442a68f763adc7cfc9ce, type: 2}
+  _interactableLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &8217764183366379351
 GameObject:
   m_ObjectHideFlags: 0

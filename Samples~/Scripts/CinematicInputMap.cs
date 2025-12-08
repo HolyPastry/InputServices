@@ -1,14 +1,14 @@
 using System;
-using Bakery.Inputs;
+using Bakery;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 [CreateAssetMenu(fileName = "CinematicInputMap", menuName = "Bakery/CinematicInputMap")]
-public class CinematicInputMap : InputMap, Inputs.ICinematicActions
+public class CinematicInputMap : InputMap, GenericInputs.ICinematicActions
 {
     public static event Action OnSkip = delegate { };
-    private Inputs.CinematicActions _inputMap;
+    private GenericInputs.CinematicActions _inputMap;
 
     public override bool IsEnabled
     {
@@ -22,7 +22,7 @@ public class CinematicInputMap : InputMap, Inputs.ICinematicActions
 
     public override void Init()
     {
-        Inputs inputs = new();
+        GenericInputs inputs = new();
         inputs.Enable();
         _inputMap = inputs.Cinematic;
         inputs.Cinematic.SetCallbacks(this);
