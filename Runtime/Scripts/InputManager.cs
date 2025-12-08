@@ -46,7 +46,7 @@ namespace Bakery
             foreach (var map in _maps)
                 map.Init();
 
-            SetMap(_defaultMap);
+            SetExclusiveMap(_defaultMap);
         }
 
 
@@ -115,10 +115,10 @@ namespace Bakery
                 Debug.LogWarning("Input Services: No previous input map to revert to");
                 return;
             }
-            SetMap(_previousMap);
+            SetExclusiveMap(_previousMap);
         }
 
-        public void SetMap(InputMap newMap)
+        public void SetExclusiveMap(InputMap newMap)
         {
             if (_currentMap == newMap) return;
             foreach (var map in _maps)
@@ -133,6 +133,16 @@ namespace Bakery
         public void OnCursorPosition(InputAction.CallbackContext context)
         {
             _cursorPosition = context.ReadValue<Vector2>();
+        }
+
+        public void AddMap(InputMap map)
+        {
+            map.IsEnabled = true;
+        }
+
+        public void RemoveMap(InputMap map)
+        {
+            map.IsEnabled = false;
         }
     }
 }

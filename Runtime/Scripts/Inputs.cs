@@ -30,8 +30,16 @@ namespace Bakery
         {
             public InputMap CurrentMap => null;
             public GameObject FirstObjectUnderCursor => null;
+
+            public void AddMap(InputMap map)
+            { }
+
+            public void RemoveMap(InputMap map)
+            {
+            }
+
             public void RevertMap() { }
-            public void SetMap(InputMap map) { }
+            public void SetExclusiveMap(InputMap map) { }
         }
     }
 

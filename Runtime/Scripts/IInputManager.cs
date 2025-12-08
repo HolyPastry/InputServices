@@ -6,7 +6,9 @@ namespace Bakery
     {
         InputMap CurrentMap { get; }
         GameObject FirstObjectUnderCursor { get; }
-        void SetMap(InputMap map);
+        void SetExclusiveMap(InputMap map);
+        void AddMap(InputMap map);
+        void RemoveMap(InputMap map);
         void RevertMap();
 
     }
