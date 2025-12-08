@@ -1,6 +1,6 @@
 {
     "name": "com.holypastry.bakery.inputs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "displayName": "Input Services",
     "description": "Basic service to wrap the input system.",
     "unity": "2022.3",
