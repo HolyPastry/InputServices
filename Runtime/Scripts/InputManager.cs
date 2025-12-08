@@ -43,6 +43,10 @@ namespace Bakery
 
             _coreInputs.Enable();
             Inputs.Manager = () => this;
+            foreach (var map in _maps)
+                map.Init();
+
+            SetMap(_defaultMap);
         }
 
 
@@ -51,22 +55,10 @@ namespace Bakery
         {
             _coreInputs.Disable();
             Inputs.Manager = Inputs.UnregisterManager;
-
-        }
-
-        void Start()
-        {
-            foreach (var map in _maps)
-                map.Init();
-
-            SetMap(_defaultMap);
-        }
-
-        void OnDestroy()
-        {
             foreach (var map in _maps)
                 map.Shutdown();
         }
+
 
         void FixedUpdate()
         {
