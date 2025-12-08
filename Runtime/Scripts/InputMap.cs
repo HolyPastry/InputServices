@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Bakery.Inputs
+namespace Bakery
 {
 
     public abstract class InputMap : ScriptableObject

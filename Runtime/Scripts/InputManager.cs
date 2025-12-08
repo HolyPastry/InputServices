@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Bakery.Inputs
+namespace Bakery
 {
 
-    public class InputManager : MonoBehaviour, CoreInputs.ICoreActions
+    public class InputManager : MonoBehaviour, IInputManager, CoreInputs.ICoreActions
     {
         [SerializeField] private List<InputMap> _maps = new();
 
@@ -26,6 +26,10 @@ namespace Bakery.Inputs
 
         private GameObject _firstObjectUnderCursor;
 
+        public InputMap CurrentMap => _currentMap;
+
+        public GameObject FirstObjectUnderCursor => _firstObjectUnderCursor;
+
         void Awake()
         {
             _camera = Camera.main;
@@ -36,11 +40,9 @@ namespace Bakery.Inputs
 
         void OnEnable()
         {
-            InputServices.SwitchInputMap = SetInputMap;
-            InputServices.RevertInputMap = RevertInputMap;
-            InputServices.GetFirstObjectUnderCursor = () => _firstObjectUnderCursor;
-            InputServices.GetCurrentInputMap = () => _currentMap;
+
             _coreInputs.Enable();
+            Inputs.Manager = () => this;
         }
 
 
@@ -48,10 +50,8 @@ namespace Bakery.Inputs
         void OnDisable()
         {
             _coreInputs.Disable();
-            InputServices.SwitchInputMap = delegate { };
-            InputServices.RevertInputMap = delegate { };
-            InputServices.GetFirstObjectUnderCursor = delegate { return null; };
-            InputServices.GetCurrentInputMap = delegate { return null; };
+            Inputs.Manager = Inputs.UnregisterManager;
+
         }
 
         void Start()
@@ -59,7 +59,7 @@ namespace Bakery.Inputs
             foreach (var map in _maps)
                 map.Init();
 
-            SetInputMap(_defaultMap);
+            SetMap(_defaultMap);
         }
 
         void OnDestroy()
@@ -80,7 +80,7 @@ namespace Bakery.Inputs
             if (!Physics.Raycast(ray, out RaycastHit hit, 1000f, _interactableLayer))
             {
                 if (_firstObjectUnderCursor == null) return false;
-                InputEvents.OnPointerExit?.Invoke();
+                Inputs.Events.OnPointerExit?.Invoke();
                 _firstObjectUnderCursor = null;
                 return false;
             }
@@ -88,10 +88,10 @@ namespace Bakery.Inputs
             if (hit.collider.gameObject == _firstObjectUnderCursor) return true;
 
             if (_firstObjectUnderCursor != null)
-                InputEvents.OnPointerExit?.Invoke();
+                Inputs.Events.OnPointerExit?.Invoke();
 
             _firstObjectUnderCursor = hit.collider.gameObject;
-            InputEvents.OnPointerEnter?.Invoke();
+            Inputs.Events.OnPointerEnter?.Invoke();
             return true;
         }
 
@@ -101,13 +101,13 @@ namespace Bakery.Inputs
                 return false;
             //Debug.Log(hitObject.name);
             if (_firstObjectUnderCursor != null)
-                InputEvents.OnPointerExit?.Invoke();
+                Inputs.Events.OnPointerExit?.Invoke();
 
 
             if (hitObject != null)
             {
                 _firstObjectUnderCursor = hitObject;
-                InputEvents.OnPointerEnter?.Invoke();
+                Inputs.Events.OnPointerEnter?.Invoke();
             }
             else
                 _firstObjectUnderCursor = null;
@@ -116,17 +116,17 @@ namespace Bakery.Inputs
 
         }
 
-        private void RevertInputMap()
+        public void RevertMap()
         {
             if (_previousMap == null)
             {
                 Debug.LogWarning("Input Services: No previous input map to revert to");
                 return;
             }
-            SetInputMap(_previousMap);
+            SetMap(_previousMap);
         }
 
-        private void SetInputMap(InputMap newMap)
+        public void SetMap(InputMap newMap)
         {
             if (_currentMap == newMap) return;
             foreach (var map in _maps)
@@ -135,7 +135,7 @@ namespace Bakery.Inputs
             }
             _previousMap = _currentMap;
             _currentMap = newMap;
-            InputEvents.OnInputMapChanged?.Invoke(newMap);
+            Inputs.Events.OnInputMapChanged?.Invoke(newMap);
         }
 
         public void OnCursorPosition(InputAction.CallbackContext context)

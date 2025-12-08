@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Bakery.Inputs
+namespace Bakery
 {
     internal class RaycastUtilities
     {

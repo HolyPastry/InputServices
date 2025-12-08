@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace Bakery.Inputs
+namespace Bakery
 {
     /// <summary>
     /// Provides programmatic access to <see cref="InputActionAsset" />, <see cref="InputActionMap" />, <see cref="InputAction" /> and <see cref="InputControlScheme" /> instances defined in asset "Assets/InputServices/Runtime/Settings/CoreInputs.inputactions".
@@ -74,7 +74,7 @@ namespace Bakery.Inputs
     /// }
     /// </code>
     /// </example>
-    public partial class @CoreInputs: IInputActionCollection2, IDisposable
+    public partial class @CoreInputs : IInputActionCollection2, IDisposable
     {
         /// <summary>
         /// Provides access to the underlying asset instance.
