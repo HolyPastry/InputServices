@@ -41,6 +41,21 @@ namespace Bakery
             public void RevertMap() { }
             public void SetExclusiveMap(InputMap map) { }
         }
+
+        //Cleaning stuff in case cowboys are fast reloading in the editor
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            Events.OnPointerExit = delegate { };
+            Events.OnPointerEnter = delegate { };
+            Events.OnInputMapChanged = delegate { };
+            Manager = UnregisterManager;
+
+
+#if UNITY_EDITOR
+            Debug.Log("[Flow] Static fields reset (domain reload skipped)");
+#endif
+        }
     }
 
 }

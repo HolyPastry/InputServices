@@ -1,5 +1,3 @@
-using System;
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +7,7 @@ namespace Bakery
 
     public class InputManager : MonoBehaviour, IInputManager, CoreInputs.ICoreActions
     {
+        public InputActionAsset InputActions;
         [SerializeField] private List<InputMap> _maps = new();
 
         [SerializeField] private InputMap _defaultMap;
@@ -30,8 +29,11 @@ namespace Bakery
 
         public GameObject FirstObjectUnderCursor => _firstObjectUnderCursor;
 
+        public Vector2 CursorPosition => _cursorPosition;
+
         void Awake()
         {
+            var maps = InputActions.actionMaps;
             _camera = Camera.main;
             _coreInputs = new CoreInputs();
             _coreInputs.Core.SetCallbacks(this);
