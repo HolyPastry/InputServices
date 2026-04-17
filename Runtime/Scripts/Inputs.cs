@@ -31,6 +31,12 @@ namespace Bakery
             public InputMap CurrentMap => null;
             public GameObject FirstObjectUnderCursor => null;
 
+            public Vector2 CursorPosition
+            {
+                get => Vector2.zero;
+                set { }
+            }
+
             public void AddMap(InputMap map)
             { }
 

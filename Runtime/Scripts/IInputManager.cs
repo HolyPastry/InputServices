@@ -4,6 +4,7 @@ namespace Bakery
 {
     public interface IInputManager
     {
+        Vector2 CursorPosition { get; set; }
         InputMap CurrentMap { get; }
         GameObject FirstObjectUnderCursor { get; }
         void SetExclusiveMap(InputMap map);

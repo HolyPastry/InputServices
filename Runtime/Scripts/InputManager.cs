@@ -29,7 +29,11 @@ namespace Bakery
 
         public GameObject FirstObjectUnderCursor => _firstObjectUnderCursor;
 
-        public Vector2 CursorPosition => _cursorPosition;
+        public Vector2 CursorPosition
+        {
+            get => _cursorPosition;
+            set => _cursorPosition = value;
+        }
 
         void Awake()
         {
